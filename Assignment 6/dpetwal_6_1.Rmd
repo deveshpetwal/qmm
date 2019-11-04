@@ -1,0 +1,183 @@
+---
+title: "Dev Submission"
+output:
+  html_document:
+    df_print: paged
+---
+
+Step 1: Installing necessary package 
+```{r}
+#install.packages("Benchmarking")
+library("Benchmarking")
+```
+
+
+
+Step 2: Reading input
+```{r}
+x <- matrix(c(150,400,320,520,350,320,0.2,0.7,1.2,2,1.2,0.7), ncol=2)
+
+y <- matrix(c(14000,14000,42000,28000,19000,14000,3500,21000,10500,42000,25000,15000), ncol=2)
+
+colnames(x) <- c("staff Hours Per Day","Supplies Per Day")
+
+colnames(y) <- c("Reimbursed Patient Days","Privately Paid Patient Days")
+
+x
+
+y
+
+```
+
+
+Step 3: Running DEA Analysis for FDH
+```{r}
+fdh <- dea(x,y,RTS="fdh") 
+
+peers(fdh) 
+
+lambda(fdh) 
+
+dea.plot.isoquant(x,y,RTS="fdh") 
+
+summary(fdh)
+
+```
+
+Step 4: Running DEA Analysis for CRS
+```{r}
+crs <- dea(x,y,RTS = "crs") 
+
+peers(crs) 
+
+lambda(crs) 
+
+dea.plot.isoquant(x,y,RTS="crs") 
+
+summary(crs)
+
+```
+
+Step 5: Running DEA Analysis for VRS
+```{r}
+vrs <- dea(x,y,RTS = "vrs") 
+
+peers(vrs) 
+
+lambda(vrs) 
+
+dea.plot.isoquant(x,y,RTS="vrs") 
+
+summary(vrs)
+
+```
+
+Step 6: Running DEA Analysis for IRS
+```{r}
+irs <- dea(x,y,RTS = "irs") 
+
+peers(irs) 
+
+lambda(irs) 
+
+dea.plot.isoquant(x,y,RTS="irs") 
+
+summary(irs)
+
+```
+
+Step 7: Running DEA Analysis for DRS
+```{r}
+drs <- dea(x,y,RTS = "drs") 
+
+peers(drs) 
+
+lambda(drs) 
+
+dea.plot.isoquant(x,y,RTS="drs") 
+
+summary(drs)
+
+
+```
+
+Step 7: Running DEA Analysis for FDH+
+```{r}
+fdh_plus <- dea(x,y,RTS="fdh+") 
+
+peers(fdh_plus) 
+
+lambda(fdh_plus) 
+
+summary(fdh_plus)
+
+dea.plot(x,y,RTS="fdh",ORIENTATION="in-out",txt=LETTERS[1:length(x)])
+dea.plot(x,y,RTS="add",ORIENTATION="in-out",add=TRUE,lty="dashed",lwd=2)
+dea.plot(x,y,RTS="fdh+",ORIENTATION="in-out",add=TRUE,lty="dotted",lwd=3,col="red")
+
+```
+
+
+Step 8: Compare & Contrast
+
+
+FDH technology and input orientated efficiency
+Number of firms with efficiency==1 are 6 out of 6 
+Mean efficiency: 1 
+---                
+  Eff range      #   %
+        E ==1    6 100
+
+
+
+VRS technology and input orientated efficiency
+Number of firms with efficiency==1 are 5 out of 6 
+Mean efficiency: 0.983 
+---                
+  Eff range      #  %
+  0.8<= E <0.9   1 17
+  0.9<= E <1     0  0
+        E ==1    5 83
+
+
+
+DRS technology and input orientated efficiency
+Number of firms with efficiency==1 are 4 out of 6 
+Mean efficiency: 0.974 
+---                
+  Eff range      #  %
+  0.8<= E <0.9   1 17
+  0.9<= E <1     1 17
+        E ==1    4 67
+
+
+
+CRS technology and input orientated efficiency
+Number of firms with efficiency==1 are 4 out of 6 
+Mean efficiency: 0.974 
+---                
+  Eff range      #  %
+  0.8<= E <0.9   1 17
+  0.9<= E <1     1 17
+        E ==1    4 67
+_
+
+
+IRS technology and input orientated efficiency
+Number of firms with efficiency==1 are 5 out of 6 
+Mean efficiency: 0.983 
+---                
+  Eff range      #  %
+  0.8<= E <0.9   1 17
+  0.9<= E <1     0  0
+        E ==1    5 83
+_
+
+
+FDH+ technology and input orientated efficiency
+Number of firms with efficiency==1 are 6 out of 6 
+Mean efficiency: 1 
+---                
+  Eff range      #   %
+        E ==1    6 100
+ 
